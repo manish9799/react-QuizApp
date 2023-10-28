@@ -1,24 +1,50 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { Box,Container, } from '@mui/material';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import SubmitQuiz from './Pages/SubmitQuiz';
+import Questions from './Pages/Questions';
+import QuizSettings from './Pages/QuizSettings';
+import Home from './Pages/Home';
+import NotFound404 from './Pages/NotFound404';
 
 function App() {
+  const [questionsData, setQuestionsData] = useState([])
+  const [correctAns, setCorrectAns] = useState(0)
+  const [settingDetails, setSettingDetails] = useState({
+    name: "",
+    category: "",
+    difficulty: "",
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box className='main-box'>
+      <Container >
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/quizSetting" element={
+            <QuizSettings
+              quesArray={[questionsData, setQuestionsData]}
+              quizDetails={[settingDetails, setSettingDetails]}
+            />} />
+            <Route path="/quiz-questions" element={
+            <Questions 
+              questionsData={questionsData}
+              setSettingDetails={setSettingDetails}
+              correction ={[correctAns, setCorrectAns]}
+            />} />
+            <Route path="/quiz-submit" element={
+            <SubmitQuiz 
+              correction ={[correctAns, setCorrectAns]}
+              settingDetails={settingDetails} 
+              setSettingDetails={setSettingDetails}
+            />} />
+            <Route path="*" element={<NotFound404/>} />
+          </Routes>
+        </BrowserRouter>
+      </Container>
+    </Box>
   );
 }
 
