@@ -20,7 +20,7 @@ function App() {
   return (
     <Box className='main-box'>
       <Container >
-        <BrowserRouter>
+        <BrowserRouter basename="/react-QuizApp">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/quizSetting" element={
